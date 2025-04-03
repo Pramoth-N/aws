@@ -105,6 +105,7 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
 ```
+
 ### **Benefits of Multistage Build**
 1. **Smaller Image Size**  
    - The final image doesn’t include unnecessary dependencies, build tools, or source files.
