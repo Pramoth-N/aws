@@ -86,6 +86,26 @@ COPY --from=builder /app/node_modules ./node_modules
 CMD ["node", "dist/index.js"]
 ```
 
+
+
+### nginx
+``` dockerfile
+# Build Stage
+FROM node:18 AS builder
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# Production Stage
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
+```
+
 ### **Benefits of Multistage Build**
 1. **Smaller Image Size**  
    - The final image doesn’t include unnecessary dependencies, build tools, or source files.
